@@ -22,11 +22,6 @@ class TTTGameHandler
     @game_runner ||= create_game
   end
 
-  def squares_to_json
-    squares = game_runner.game.board.squares.map { |square| square ? square.to_s.upcase : "" }
-    {"squares" => squares }.to_json
-  end
-
   def make_move(move)
     game_runner.make_move(move)
   rescue InvalidMoveException
@@ -35,7 +30,15 @@ class TTTGameHandler
   def handle(request)
     move = get_move(request)
     make_move(move)
-    squares_to_json
+    build_response
+  end
+
+  def build_response
+    {
+      "squares" => game_runner.game.board.squares,
+      "winner" => game_runner.game.winner.to_s,
+      "gameover" => game_runner.game.game_over?,
+    }
   end
 end
 
