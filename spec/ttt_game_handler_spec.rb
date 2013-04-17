@@ -47,7 +47,7 @@ describe TTTGameHandler do
     end
 
     it "is a hash with the winner" do
-      handler.build_response["winner"].should == handler.game_runner.game.winner
+      handler.build_response["winner"].should == handler.game_runner.game.winner.to_s
     end
 
     it "is a hash with gameover" do

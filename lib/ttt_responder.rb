@@ -14,10 +14,6 @@ class TTTResponder
 
   def respond(request)
     response = to_json(@handler.handle(request))
-
-    p "Request - #{request}"
-    p "Response - #{response}"
-
     body = Utilities.toBytes(response)
     header = Utilities.getCommonHeader("application/json", body.length)
     Utilities.generateResponse(Utilities.status_line(200), header, body)
