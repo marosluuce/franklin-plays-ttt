@@ -1,7 +1,13 @@
 require "ttt_responder"
+require "nil_handler"
 
 describe TTTResponder do
   let(:responder) { TTTResponder.new }
+
+  it "creates a request handler" do
+    RequestHandler.should_receive(:create).and_return(NilHandler.new)
+    responder.respond({})
+  end
 
   it "is a response" do
     request = {"Request-URI" => "/", "Method" => "GET"}

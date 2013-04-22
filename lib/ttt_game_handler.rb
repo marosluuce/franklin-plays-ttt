@@ -1,7 +1,5 @@
 $:.unshift(File.expand_path(File.dirname(__FILE__) + "/../TicTacToe/lib"))
 
-require "json"
-
 require "game"
 require "game_runner"
 
@@ -27,15 +25,9 @@ class TTTGameHandler
   rescue InvalidMoveException
   end
 
-  def handle(request)
-    move = get_move(request)
-    make_move(move)
-    build_response
-  end
-
   def build_response
     {
-      "squares" => game_runner.game.board.squares,
+      "squares" => game_runner.game.board.squares.map { |square| square.to_s },
       "winner" => game_runner.game.winner.to_s,
       "gameover" => game_runner.game.game_over?,
     }

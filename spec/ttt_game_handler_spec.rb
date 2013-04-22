@@ -34,16 +34,9 @@ describe TTTGameHandler do
     end
   end
 
-  describe "handle" do
-    it "processes a request and returns the json board" do
-      request = {"Body" => {"square" => "1"}}
-      handler.handle(request).should be_an_instance_of Hash
-    end
-  end
-
   describe "build_response" do
     it "is a hash with the current squares" do
-      handler.build_response["squares"].should == handler.game_runner.game.board.squares
+      handler.build_response["squares"].should == handler.game_runner.game.board.squares.map { |squares| squares.to_s }
     end
 
     it "is a hash with the winner" do
