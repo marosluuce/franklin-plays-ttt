@@ -49,5 +49,9 @@ describe TTTGameHandler do
       handler.game_runner.game.stub(:game_over?).and_return(false)
       handler.build_response["gameover"].should == false
     end
+
+    it "is a hash with the current player" do
+      handler.build_response["currentplayer"].should == handler.game_runner.game.current_player.to_s
+    end
   end
 end
