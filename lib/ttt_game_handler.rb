@@ -30,7 +30,7 @@ class TTTGameHandler
       "squares" => game_runner.game.board.squares.map { |square| square.to_s },
       "winner" => game_runner.game.winner.to_s,
       "gameover" => game_runner.game.game_over?,
-      "currentplayer" => game_runner.game.current_player.to_s,
+      "currentplayer" => "player #{game_runner.game.current_player}",
     }
   end
 end

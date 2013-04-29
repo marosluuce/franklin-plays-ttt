@@ -51,7 +51,9 @@ describe TTTGameHandler do
     end
 
     it "is a hash with the current player" do
-      handler.build_response["currentplayer"].should == handler.game_runner.game.current_player.to_s
+      handler.build_response["currentplayer"].should == "player x"
+      handler.make_move(1)
+      handler.build_response["currentplayer"].should == "player o"
     end
   end
 end
