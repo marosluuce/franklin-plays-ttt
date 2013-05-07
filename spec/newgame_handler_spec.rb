@@ -2,37 +2,23 @@ require "newgame_handler"
 require "ttt_game_handler"
 
 describe NewgameHandler do
-  let(:request) { {"Body" => {"newgame" => "true"}} }
+  let(:request) { {"Body" => {"newgame" => "easy_ai"}} }
   let(:handler) { NewgameHandler.new }
   let(:game_handler) { TTTGameHandler.new }
 
   describe "handle" do
-
-    before(:each) do
-      game_handler.make_move(1)
-      game_handler.make_move(4)
-      game_handler.make_move(2)
-      game_handler.make_move(5)
-      game_handler.make_move(3)
+    it "creates a new game" do
+      game_handler.should_receive(:create_game)
+      handler.handle(request, game_handler)
     end
 
-    it "creates a new game when newgame is true" do
-      game_handler.game_runner.game.game_over?.should be_true
+    it "selects a new opponent" do
+      game_handler.should_receive(:select_opponent).with("easy_ai")
       handler.handle(request, game_handler)
-      game_handler.game_runner.game.game_over?.should be_false
-    end
-
-    it "doesn't create a new game when newgame is false" do
-      request["Body"]["newgame"] = "false"
-
-      game_handler.game_runner.game.game_over?.should be_true
-      handler.handle(request, game_handler)
-      game_handler.game_runner.game.game_over?.should be_true
     end
   end
 
-  it "extracts new game" do
-    handler.extract_newgame(request).should == true
-    handler.extract_newgame({"Body" => {"newgame" => ""}})
+  it "opponent" do
+    handler.opponent(request).should == "easy_ai"
   end
 end
